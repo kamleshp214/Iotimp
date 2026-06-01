@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Study Guide — RGPV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #0a0a0f;
+            color: #e8e8e8;
+            font-family: 'Barlow', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        .container { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: #0a0a0f;
+            border-bottom: 1px solid #c8a84b;
+            padding: 20px 0;
+            z-index: 100;
+        }
+
+        h1 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #c8a84b;
+            text-transform: uppercase;
+        }
+
+        .unit-nav { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .unit-nav a {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #e8e8e8;
+            text-decoration: none;
+            padding: 6px 12px;
+            border: 1px solid #e8e8e8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+        }
+
+        .unit-nav a:hover { border-color: #c8a84b; color: #c8a84b; }
+
+        .unit-section { margin-top: 40px; }
+
+        .unit-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #c8a84b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #c8a84b;
+        }
+
+        .topic-card {
+            border: 1px solid #e8e8e8;
+            margin-bottom: 20px;
+            transition: border-color 0.2s;
+        }
+
+        .topic-card:hover { border-color: #c8a84b; }
+
+        .topic-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0a0a0f;
+        }
+
+        .topic-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .toggle-icon { font-size: 20px; font-weight: 700; color: #c8a84b; }
+
+        .topic-content { display: none; padding: 20px; border-top: 1px solid #e8e8e8; }
+        .topic-content.active { display: block; }
+
+        .section-heading {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #c8a84b;
+            text-transform: uppercase;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .section-heading:first-child { margin-top: 0; }
+
+        .definition { font-size: 15px; line-height: 1.5; margin-bottom: 15px; }
+
+        .key-points { list-style: none; margin-bottom: 15px; }
+
+        .key-points li {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .key-points li:before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #c8a84b;
+        }
+
+        .diagram {
+            background: #000;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            white-space: pre;
+            overflow-x: auto;
+            border: 1px solid #c8a84b;
+            margin-bottom: 15px;
+        }
+
+        .trick {
+            background: #1a1a1f;
+            padding: 12px 15px;
+            border-left: 3px solid #c8a84b;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .quick-ref-card {
+            border: 1px solid #e8e8e8;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+        }
+
+        .quick-ref-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: #c8a84b;
+        }
+
+        .quick-ref-def { font-size: 14px; line-height: 1.5; margin-bottom: 6px; }
+
+        .quick-ref-analogy {
+            font-size: 13px;
+            color: #c8a84b;
+            font-style: italic;
+            margin: 6px 0 10px 0;
+            padding-left: 12px;
+            border-left: 2px solid #c8a84b;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>IoT Study Guide — RGPV</h1>
+        <nav class="unit-nav">
+            <a href="#unit1">Unit 1</a>
+            <a href="#unit2">Unit 2</a>
+            <a href="#unit3">Unit 3</a>
+            <a href="#unit4">Unit 4</a>
+            <a href="#unit5">Unit 5</a>
+            <a href="#quick-ref">Quick Ref</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  UNIT 1                                                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="unit1" class="unit-section">
+    <h2 class="unit-title">Unit 1 — Introduction & Architecture</h2>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">IoT Definition, Characteristics and Components</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">Internet of Things is a network of physical objects embedded with sensors, software, and connectivity to exchange data with other devices and systems over the internet. It enables smart decision-making through real-time data collection and analysis.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Characteristics: Connectivity, Intelligence, Dynamic Nature, Enormous Scale, Sensing, Heterogeneity</li>
+                <li>Components: Sensors/Actuators, Connectivity, Data Processing, User Interface</li>
+                <li>Sensors collect data from environment; Actuators perform actions based on commands</li>
+                <li>Connectivity protocols: WiFi, Bluetooth, Zigbee, LoRaWAN, Cellular</li>
+                <li>Edge computing processes data locally; Cloud handles heavy analytics</li>
+                <li>User interfaces include mobile apps, web dashboards, voice assistants</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">IoT System Components:
+
+[Sensors] → [Gateway] → [Cloud] → [User Interface]
+    ↓           ↓          ↓            ↓
+ Collect    Aggregate  Process     Display
+  Data       Data      Analytics    Results
+    ↑           ↑          ↓            ↓
+[Actuators] ← [Edge] ← [Storage] ← [Control]
+             Device                  Commands</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define IoT (2 marks) → List 6 characteristics with examples (3 marks) → Explain 4 components with real-world application (2 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">IoT Reference Architecture (Physical and Logical Design)</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">IoT Reference Architecture provides a standardized framework for designing IoT systems. Physical design focuses on hardware components and their connections, while logical design defines functional layers and data flow.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Physical Design: Things, Connectivity, Edge Computing, Data Accumulation, Data Abstraction, Application</li>
+                <li>Logical Design: Perception Layer, Network Layer, Middleware Layer, Application Layer</li>
+                <li>Perception Layer contains sensors and actuators for data collection</li>
+                <li>Network Layer handles communication protocols and data transmission</li>
+                <li>Middleware Layer provides data processing, storage, and device management</li>
+                <li>Application Layer delivers services to end users and business logic</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">PHYSICAL              LOGICAL
+---------             ---------
+Application    ←→     Application Layer
+    ↑                      ↑
+Data Abstract  ←→     Middleware Layer
+    ↑                      ↑
+Data Accum     ←→     Network Layer
+    ↑                      ↑
+Edge Compute   ←→     Perception Layer
+    ↑
+Connectivity
+    ↑
+Things (Sensors)</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define architecture (1 mark) → Draw and explain Physical Design 6 stages (3 marks) → Draw and explain Logical Design 4 layers (3 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">IoT Framework and Communications Model</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">IoT Framework defines the structure for building IoT solutions including hardware, software, and communication protocols. Communications Model specifies how devices exchange data using request-response, publish-subscribe, push-pull, and exclusive pair patterns.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Framework components: Device, Communication, Services, Management, Security, Application</li>
+                <li>Request-Response: Client sends request, server responds (HTTP, CoAP)</li>
+                <li>Publish-Subscribe: Publishers send data to topics, subscribers receive (MQTT)</li>
+                <li>Push-Pull: Producers push data to queue, consumers pull when ready</li>
+                <li>Exclusive Pair: Bidirectional connection between two endpoints (WebSocket)</li>
+                <li>Communication protocols: MQTT, CoAP, AMQP, HTTP, WebSocket, DDS</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">1. Request-Response:
+   [Client] --Request--> [Server]
+   [Client] <-Response-- [Server]
+
+2. Publish-Subscribe:
+   [Publisher] --> [Broker] --> [Subscriber 1]
+                      ↓
+                 [Subscriber 2]
+
+3. Push-Pull:
+   [Producer] --Push--> [Queue] --Pull--> [Consumer]
+
+4. Exclusive Pair:
+   [Device A] <--Bidirectional--> [Device B]</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define framework (1 mark) → List 6 framework components (2 marks) → Explain 4 communication models with diagrams and protocols (4 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">IoT vs M2M vs WoT</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">IoT connects devices via internet for data exchange and automation. M2M is direct device-to-device communication without internet. WoT applies web standards to IoT for interoperability using HTTP, REST, and web technologies.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>IoT: Internet-based, cloud-centric, scalable, uses IP protocols, open standards</li>
+                <li>M2M: Point-to-point, proprietary protocols, limited scalability, closed systems</li>
+                <li>WoT: Web-based IoT, uses HTTP/REST, JSON/XML, web APIs, browser-accessible</li>
+                <li>IoT focuses on connectivity and data; WoT focuses on interoperability</li>
+                <li>M2M examples: ATM networks, vending machines; IoT: smart homes, cities</li>
+                <li>WoT enables web browsers to directly interact with physical devices</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">Feature      | IoT          | M2M          | WoT
+-------------|--------------|--------------|-------------
+Connection   | Internet     | Direct       | Web-based
+Protocols    | MQTT,CoAP    | Proprietary  | HTTP,REST
+Scalability  | High         | Limited      | High
+Standards    | Open         | Closed       | Web Standards
+Cloud        | Yes          | Optional     | Yes
+Interop      | Moderate     | Low          | High</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define all three (2 marks) → Draw comparison table with 6 parameters (3 marks) → Give real examples for each (2 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">IoT Gateway and Proxy</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">IoT Gateway is a physical device that connects sensors to the cloud, performing protocol translation, data filtering, and edge processing. Proxy acts as an intermediary for communication, providing security, caching, and load balancing between devices and servers.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Gateway functions: Protocol translation, data aggregation, edge analytics, security</li>
+                <li>Gateway connects heterogeneous devices using different protocols to cloud</li>
+                <li>Proxy types: Forward proxy (client-side), Reverse proxy (server-side)</li>
+                <li>Proxy functions: Security filtering, caching, load balancing, anonymity</li>
+                <li>Gateway performs local processing to reduce cloud traffic and latency</li>
+                <li>Both provide security through encryption, authentication, and access control</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">[Sensor 1 - Zigbee]  ┐
+[Sensor 2 - BLE]     ├→ [Gateway] → [Cloud]
+[Sensor 3 - WiFi]    ┘      ↓
+                        Edge Processing
+                        Protocol Convert
+                        Data Filter / Security
+
+Proxy Model:
+[Device] → [Forward Proxy] → [Internet] → [Reverse Proxy] → [Server]
+           (Client Side)                   (Server Side)</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define Gateway and Proxy (2 marks) → Explain 4 Gateway functions with diagram (3 marks) → Explain Proxy types and functions (2 marks)</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  UNIT 2                                                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="unit2" class="unit-section">
+    <h2 class="unit-title">Unit 2 — Sensing & Hardware</h2>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">Sensor Node Architecture, Classes and Error Types</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">Sensor node is a self-contained device with sensing, processing, communication, and power components that collects environmental data. Sensor classes categorize sensors by measurement type, and errors occur due to calibration, environmental factors, or hardware limitations.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Architecture: Sensing Unit, Processing Unit, Transceiver, Power Unit, Memory</li>
+                <li>Classes: Analog (continuous output), Digital (discrete output), Passive (no power), Active (requires power)</li>
+                <li>Error types: Bias (constant offset), Drift (slow change over time), Hysteresis (path-dependent), Quantization (ADC rounding)</li>
+                <li>Processing unit includes microcontroller and memory for local computation</li>
+                <li>Transceiver enables wireless communication using protocols like Zigbee, BLE</li>
+                <li>Power management critical for battery-operated nodes using sleep modes</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">Sensor Node Architecture:
+
+[Sensing Unit] → [ADC] → [Processing Unit] ← [Memory]
+                              ↓
+                         [Transceiver]
+                              ↓
+                         [Antenna]
+                              ↑
+                         [Power Unit] (Battery/Solar)
+
+Sensor Classes:
+Analog ─┬─ Passive (Thermistor, LDR)
+        └─ Active  (Ultrasonic, Radar)
+Digital ─┬─ Passive (PIR, Magnetic switch)
+         └─ Active  (Camera, GPS)</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Draw architecture with 5 components (3 marks) → Explain 4 sensor classes with examples (2 marks) → Describe 4 error types: bias, drift, hysteresis, quantization (2 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">Actuator Types and Applications</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">Actuators are devices that convert electrical signals into physical actions like motion, heat, or light. They enable IoT systems to interact with the physical world based on sensor data and control commands.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Types: Hydraulic (fluid pressure), Pneumatic (compressed air), Electric (motors, solenoids), Thermal (heaters, coolers), Mechanical (springs, gears)</li>
+                <li>Electric actuators: DC motors, Servo motors, Stepper motors, Relays, Solenoids</li>
+                <li>Applications: Smart home (door locks, blinds), Industrial (robotic arms, valves), Automotive (brakes, throttle)</li>
+                <li>Selection criteria: Force/torque, speed, precision, power consumption, cost</li>
+                <li>Control methods: PWM for speed control, Digital for on/off, Analog for proportional control</li>
+                <li>Feedback sensors paired with actuators for closed-loop control</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">HYDRAULIC       PNEUMATIC       ELECTRIC        THERMAL
+[Pump→Piston]   [Compressor]    [Motor/Relay]   [Heater]
+High Force      Medium Force    Precise Ctrl    Temp Ctrl
+Slow Response   Fast Response   Variable Speed  Slow
+
+Closed-Loop Control:
+[Sensor] → [Controller] → [Actuator] → [Physical System]
+              ↑                              ↓
+              └──────── Feedback ────────────┘
+
+Applications:
+Smart Home: Door Lock, Thermostat, Blinds
+Industrial:  Conveyor, Valve, Robotic Arm
+Automotive:  Throttle, Brake, Steering</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define actuator (1 mark) → Explain 5 types with working principle (3 marks) → Give 3 application domains with examples (3 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">ZigBee Architecture and Applications</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">ZigBee is a low-power, low-data-rate wireless communication protocol based on IEEE 802.15.4 standard designed for IoT applications. It operates in 2.4 GHz with mesh networking capability for reliable device-to-device communication.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Stack layers: Physical (IEEE 802.15.4), MAC, Network, Application Support Sublayer, Application</li>
+                <li>Device types: Coordinator (network manager), Router (routes packets), End Device (sensor/actuator)</li>
+                <li>Topologies: Star, Tree, Mesh (self-healing, multi-hop routing)</li>
+                <li>Features: Ultra-low power (battery life in years), 250 kbps, 10-100m range, 65000 nodes</li>
+                <li>Security: 128-bit AES encryption, authentication, access control</li>
+                <li>Applications: Home automation, industrial monitoring, healthcare, smart lighting, building automation</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">ZigBee Stack:
+Application Layer (ZCL, Profiles)
+        ↓
+Application Support Sublayer (APS)
+        ↓
+Network Layer (Routing, Security)
+        ↓
+MAC Layer (CSMA/CA)
+        ↓
+Physical Layer (IEEE 802.15.4)
+
+Topologies:
+STAR:      TREE:      MESH:
+  [C]       [C]       [C]--[R]
+ /|\         |         | X  |
+[E][E][E]  [R][R]    [R]--[R]
+           /\ |       |    |
+         [E][E][E]   [E]  [E]
+
+C=Coordinator  R=Router  E=End Device</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define ZigBee (1 mark) → Draw 5-layer stack (2 marks) → Explain 3 device types and 3 topologies (2 marks) → List 4 applications (2 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">Bluetooth vs ZigBee</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">Bluetooth is a short-range wireless technology for high-speed data transfer between consumer devices. ZigBee is designed for low-power, low-data-rate IoT sensor networks with mesh topology and years-long battery life.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Bluetooth: 1-3 Mbps data rate, star/point-to-point, higher power, consumer devices</li>
+                <li>ZigBee: 250 kbps, mesh topology, ultra-low power, industrial/sensor networks</li>
+                <li>Bluetooth supports 7 devices per piconet; ZigBee supports 65000 nodes per network</li>
+                <li>Bluetooth Low Energy (BLE) bridges gap — lower power for IoT wearables</li>
+                <li>ZigBee better for large-scale sensor networks; Bluetooth better for audio and peripherals</li>
+                <li>Both operate at 2.4 GHz with 128-bit security</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">Parameter    | Bluetooth      | ZigBee
+-------------|----------------|----------------
+Standard     | IEEE 802.15.1  | IEEE 802.15.4
+Data Rate    | 1-3 Mbps       | 250 kbps
+Range        | 10-100m        | 10-100m
+Topology     | Star / P2P     | Star/Tree/Mesh
+Power        | Medium-High    | Ultra-Low
+Battery Life | Days-Weeks     | Months-Years
+Max Nodes    | 7 per piconet  | 65000 per network
+Use Case     | Audio, Files   | Sensors, Automation
+Frequency    | 2.4 GHz        | 2.4 GHz
+Security     | 128-bit        | 128-bit AES</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define both (2 marks) → Draw comparison table with 8 parameters (4 marks) → Give use case examples for each (1 mark)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">IEEE 802.15.4 Standard</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">IEEE 802.15.4 is a technical standard defining Physical and MAC layers for low-rate wireless personal area networks (LR-WPAN). It is the foundation for ZigBee, 6LoWPAN, and other IoT protocols requiring low power and low data rate communication.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Defines only Physical and MAC layers; upper layers defined by ZigBee, 6LoWPAN etc.</li>
+                <li>Frequency bands: 868 MHz (Europe, 1 ch), 915 MHz (Americas, 10 ch), 2.4 GHz (Global, 16 ch)</li>
+                <li>Data rates: 20 kbps (868 MHz), 40 kbps (915 MHz), 250 kbps (2.4 GHz)</li>
+                <li>Full Function Device (FFD): can be coordinator or router; Reduced Function Device (RFD): end device only</li>
+                <li>MAC features: CSMA/CA channel access, beacon and non-beacon modes, GTS (guaranteed time slots)</li>
+                <li>Frame types: Data, Acknowledgment, Beacon, MAC Command</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">Stack Position:
+
+Upper Layers (ZigBee, 6LoWPAN, Thread...)
+─────────────────────────────────────────
+IEEE 802.15.4 Standard:
+  MAC Layer (CSMA/CA, Framing, ACK)
+         ↓
+  Physical Layer (RF Transceiver)
+─────────────────────────────────────────
+
+Frequency Bands:
+868 MHz →  1 channel, 20 kbps  (Europe)
+915 MHz → 10 channels, 40 kbps (Americas)
+2.4 GHz → 16 channels, 250 kbps (Global)
+
+Device Types:
+FFD ─┬─ Coordinator (1 per network)
+     └─ Router / End Device
+RFD ─── End Device only (battery sensors)</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define standard and scope (2 marks) → Explain 3 frequency bands with data rates (2 marks) → Describe FFD vs RFD and MAC features (3 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">RFID Working Principle and Applications</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">Radio Frequency Identification uses electromagnetic fields to automatically identify and track tags attached to objects. RFID system consists of tags (transponders) storing data and readers (interrogators) that wirelessly communicate using radio waves.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Components: RFID Tag (chip + antenna), RFID Reader (transceiver), Backend System (database)</li>
+                <li>Tag types: Passive (no battery, powered by reader field), Active (battery-powered, long range), Semi-passive (battery for chip, reader powers comms)</li>
+                <li>Working: Reader emits RF → Tag receives energy → Tag transmits ID → Reader decodes → Backend processes</li>
+                <li>Frequency bands: LF 125 kHz, HF 13.56 MHz, UHF 860-960 MHz, Microwave 2.45 GHz</li>
+                <li>Passive range: 10 cm to 10 m; Active range: up to 100 m</li>
+                <li>Applications: Supply chain, inventory, access control, payments, livestock, toll collection</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">RFID System Architecture:
+
+[RFID Reader] ←──RF Signal──→ [RFID Tag]
+      ↓                        (Chip + Antenna)
+[Middleware]
+      ↓
+[Backend Database]
+
+Working (5 steps):
+1. Reader emits RF electromagnetic field
+2. Tag antenna captures energy from field
+3. Tag chip powers up and encodes ID
+4. Tag modulates and reflects signal back
+5. Reader decodes → sends to backend DB
+
+Tag Comparison:
+PASSIVE:     No battery │ Short range │ Cheap  │ LF/HF
+ACTIVE:      Battery    │ Long range  │ Cost++ │ UHF
+SEMI-PASSIVE:Battery for chip, reader power comms</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define RFID (1 mark) → Draw system with 3 components (2 marks) → Explain working in 5 steps (2 marks) → Compare tag types and list applications (2 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">6LoWPAN and Wireless Sensor Network</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">6LoWPAN (IPv6 over Low-Power Wireless Personal Area Networks) enables IPv6 packets over IEEE 802.15.4 networks via an adaptation layer. WSN is a network of spatially distributed autonomous sensors monitoring physical conditions and passing data cooperatively to a gateway.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>6LoWPAN adaptation layer: header compression, fragmentation, IPv6 addressing, mesh routing</li>
+                <li>Sits between the IPv6 Network Layer and the IEEE 802.15.4 MAC Layer</li>
+                <li>WSN architecture: Sensor nodes → Sink/Gateway → Internet → End user/Task manager</li>
+                <li>WSN characteristics: Self-organizing, multi-hop routing, energy-constrained, fault-tolerant, scalable</li>
+                <li>WSN routing protocols: LEACH (clustering), RPL (IPv6 routing), AODV (on-demand)</li>
+                <li>Applications: Environmental monitoring, precision agriculture, structural health, military surveillance</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">6LoWPAN Protocol Stack:
+
+Application Layer
+        ↓
+Transport Layer (UDP/TCP)
+        ↓
+IPv6 Network Layer
+        ↓
+════════════════════════════════
+6LoWPAN Adaptation Layer
+  (Header Compression, Fragmentation)
+════════════════════════════════
+        ↓
+IEEE 802.15.4 MAC
+        ↓
+IEEE 802.15.4 PHY
+
+WSN Architecture:
+[Sensor]─┐
+[Sensor]─┼──→ [Sink/Gateway] ──→ [Internet] ──→ [User]
+[Sensor]─┘
+     Multi-hop mesh routing between nodes</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define 6LoWPAN and WSN (2 marks) → Draw 6LoWPAN stack showing adaptation layer position (2 marks) → Explain WSN architecture and 4 characteristics (3 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">Arduino vs Raspberry Pi</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">Arduino is a microcontroller-based open-source platform for real-time hardware control and sensor interfacing. Raspberry Pi is a single-board computer running a full Linux OS capable of complex processing, networking, AI, and multimedia applications.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Arduino: ATmega microcontroller, no OS, real-time deterministic control, 50 mA power, analog I/O</li>
+                <li>Raspberry Pi: ARM processor, Linux OS, multitasking, 500-1000 mA power, digital GPIO only</li>
+                <li>Arduino programmed in C/C++ via Arduino IDE; single loop program structure</li>
+                <li>Raspberry Pi supports Python, Java, C++, Node.js — full development environment</li>
+                <li>Arduino best for: sensor reading, motor control, real-time response, battery-powered projects</li>
+                <li>Raspberry Pi best for: image processing, web servers, AI/ML, databases, multimedia</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">Feature      | Arduino Uno    | Raspberry Pi 4
+-------------|----------------|------------------
+Type         | Microcontroller| Single-board Computer
+Processor    | ATmega (8-bit) | ARM Cortex (64-bit)
+Clock Speed  | 16 MHz         | 1.5 GHz
+RAM          | 2 KB SRAM      | 1 - 8 GB LPDDR4
+Storage      | 32 KB Flash    | MicroSD card
+OS           | None           | Linux (Raspbian)
+Power Draw   | 50 mA          | 500 - 1000 mA
+GPIO         | Analog+Digital | Digital only
+Real-time    | Yes            | No (OS latency)
+Cost (approx)| $20 USD        | $35 - $75 USD
+Language     | C/C++          | Python/Java/C++
+Use Case     | Sensors,Motors | AI, Web, Compute</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define both platforms (2 marks) → Draw comparison table with 10 parameters (4 marks) → Give use case examples for each (1 mark)</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  UNIT 3                                                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="unit3" class="unit-section">
+    <h2 class="unit-title">Unit 3 — Communication Protocols</h2>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">MQTT Architecture and Communication</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">MQTT (Message Queuing Telemetry Transport) is a lightweight publish-subscribe messaging protocol for constrained devices and low-bandwidth networks. A broker-based architecture decouples publishers and subscribers through topic-based message channels.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Architecture: Publishers, Broker (server), Subscribers, Topics (message channels)</li>
+                <li>QoS 0: at most once (fire and forget); QoS 1: at least once (ACK); QoS 2: exactly once (4-way handshake)</li>
+                <li>Features: Lightweight, low bandwidth, persistent sessions, Last Will Testament, retained messages</li>
+                <li>Message types: CONNECT, CONNACK, PUBLISH, SUBSCRIBE, SUBACK, UNSUBSCRIBE, PINGREQ, DISCONNECT</li>
+                <li>Topic hierarchy uses / separator — example: home/bedroom/temperature</li>
+                <li>Ports: 1883 (unencrypted), 8883 (TLS/SSL)</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">MQTT Architecture:
+
+[Publisher 1] ──PUBLISH──→ [MQTT BROKER] ──PUBLISH──→ [Subscriber 1]
+[Publisher 2] ──PUBLISH──→  (Topics A,B)  ──PUBLISH──→ [Subscriber 2]
+
+Communication Flow:
+1. Client connects to broker    (CONNECT / CONNACK)
+2. Subscriber subscribes        (SUBSCRIBE / SUBACK)
+3. Publisher publishes message  (PUBLISH)
+4. Broker forwards to all subs  (PUBLISH)
+5. Client disconnects           (DISCONNECT)
+
+QoS Levels:
+QoS 0: Publisher → Broker (no ACK, may lose)
+QoS 1: Publisher → Broker → ACK (may duplicate)
+QoS 2: 4-step handshake (guaranteed exactly once)</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define MQTT (1 mark) → Draw architecture with broker, publishers, subscribers (2 marks) → Explain 3 QoS levels (2 marks) → Describe message flow in 5 steps (2 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">CoAP Protocol and Message Types</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">CoAP (Constrained Application Protocol) is a specialized RESTful web protocol for constrained IoT devices and lossy networks. It uses UDP instead of TCP for low overhead, targeting devices with limited memory and processing power.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Message types: Confirmable (CON) — needs ACK; Non-confirmable (NON) — no ACK; Acknowledgement (ACK); Reset (RST)</li>
+                <li>Methods: GET (read), POST (create), PUT (update), DELETE (remove)</li>
+                <li>Features: UDP-based, low overhead, observe pattern, multicast support, asynchronous</li>
+                <li>Message format: 4-byte fixed header + Token + Options + Payload</li>
+                <li>Response codes: 2.xx Success, 4.xx Client Error, 5.xx Server Error</li>
+                <li>Ports: 5683 (default UDP), 5684 (DTLS secured)</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">CoAP Message Types:
+
+CONFIRMABLE (CON) — reliable:
+  Client ──CON──→ Server
+  Client ←─ACK──┘
+
+NON-CONFIRMABLE (NON) — unreliable:
+  Client ──NON──→ Server
+  (No acknowledgement sent)
+
+CoAP Message Format:
+┌─────────────────────────────┐
+│ Ver │ T │ TKL │ Code │ MsgID│  ← 4 bytes header
+├─────────────────────────────┤
+│ Token (0-8 bytes)           │
+├─────────────────────────────┤
+│ Options (variable)          │
+├─────────────────────────────┤
+│ Payload (variable)          │
+└─────────────────────────────┘
+
+Example:
+Request:  GET coap://sensor.local/temperature (CON)
+Response: 2.05 Content → "25.4°C" (ACK)</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define CoAP (1 mark) → Explain 4 message types with diagrams (3 marks) → Describe 4 methods and message format structure (3 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">AMQP Features and Components</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">AMQP (Advanced Message Queuing Protocol) is an open standard application layer protocol for enterprise message-oriented middleware. It provides reliable message delivery with queuing, routing, transactions, and security for enterprise-grade IoT applications.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Components: Producer (sender), Exchange (router), Binding (rules), Queue (buffer), Consumer (receiver), Broker</li>
+                <li>Exchange types: Direct (exact routing key), Fanout (broadcast to all), Topic (wildcard pattern), Headers (attribute match)</li>
+                <li>Features: Reliable delivery, acknowledgment, transactions, SASL/TLS security, flow control, persistence</li>
+                <li>Delivery modes: Persistent (disk, survives restart), Non-persistent (memory only)</li>
+                <li>Message properties: Priority, timestamp, expiry, content-type, correlation-id, reply-to</li>
+                <li>Ports: 5672 (default), 5671 (TLS/SSL)</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">AMQP Architecture:
+
+[Producer] → [Exchange] → [Queue 1] → [Consumer 1]
+                 ↓
+             [Queue 2] → [Consumer 2]
+
+Exchange Types:
+DIRECT : Producer → Exchange ──(key match)──→ Queue
+FANOUT : Producer → Exchange ──(broadcast)──→ All Queues
+TOPIC  : Producer → Exchange ──(*.error)────→ Matching Queues
+HEADERS: Producer → Exchange ──(attr match)──→ Queue
+
+Message Flow:
+1. Producer publishes message to Exchange
+2. Exchange applies routing rules (bindings)
+3. Message placed into matching Queue(s)
+4. Consumer retrieves and sends ACK
+5. Broker removes message after ACK</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define AMQP (1 mark) → Draw architecture with 5 components (2 marks) → Explain 4 exchange types (3 marks) → List 4 features (1 mark)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">XMPP and SMQTT</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">XMPP (Extensible Messaging and Presence Protocol) is an XML-based open standard for real-time messaging and presence information. SMQTT (Secure MQTT) is MQTT with TLS/SSL encryption providing certificate-based authentication for secure IoT communication.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>XMPP features: Real-time messaging, presence information, XML stanzas, extensible, decentralized federation</li>
+                <li>XMPP addressing: user@domain/resource format (e.g. sensor1@home.local/living-room)</li>
+                <li>XMPP stanza types: Message (content), Presence (online/offline status), IQ (info query/response)</li>
+                <li>SMQTT: standard MQTT over TLS/SSL on port 8883 with X.509 certificate authentication</li>
+                <li>SMQTT security layers: TLS handshake, certificate verification, encrypted data channel, ACL authorization</li>
+                <li>XMPP suited for human-to-human and device-to-human; SMQTT for machine-to-machine IoT</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">XMPP Architecture:
+
+[Client A] ←→ [XMPP Server A] ←→ [XMPP Server B] ←→ [Client B]
+ user@domA.com    (federation)                user@domB.com
+
+XMPP Stanzas (XML):
+&lt;message to="sensor@home"&gt;&lt;body&gt;alert&lt;/body&gt;&lt;/message&gt;
+&lt;presence&gt;&lt;show&gt;available&lt;/show&gt;&lt;/presence&gt;
+&lt;iq type="get"&gt;&lt;query xmlns="info"/&gt;&lt;/iq&gt;
+
+SMQTT Secure Session:
+[IoT Device] ──TLS ClientHello──→ [Broker]
+             ←─Certificate───────
+             ──Verify + Finished──→
+             ══ Encrypted MQTT ══ (Port 8883)
+             PUBLISH / SUBSCRIBE over secure channel</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define XMPP and SMQTT (2 marks) → Explain XMPP architecture and 3 stanza types (3 marks) → Describe SMQTT security handshake and features (2 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">REST vs SOAP vs CoAP</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">REST is a stateless architectural style using HTTP for web service APIs. SOAP is a strict XML-based messaging protocol with built-in error handling and security for enterprise systems. CoAP is a UDP-based RESTful protocol designed specifically for constrained IoT devices.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>REST: HTTP-based, stateless, JSON/XML, GET/POST/PUT/DELETE, lightweight, cacheable, easy to implement</li>
+                <li>SOAP: XML envelope format, stateful, WSDL service contracts, WS-Security, heavyweight, enterprise-grade reliability</li>
+                <li>CoAP: UDP-based, REST-like methods, binary encoding, observe pattern, multicast, ultra-lightweight for IoT</li>
+                <li>REST for web APIs and mobile backends; SOAP for enterprise integration and banking; CoAP for constrained sensors</li>
+                <li>REST uses HTTP status codes; SOAP uses Fault elements; CoAP uses numeric response codes (2.05, 4.04)</li>
+                <li>Performance order: CoAP (fastest) > REST (moderate) > SOAP (slowest due to XML overhead)</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">Comparison Table:
+
+Feature      | REST           | SOAP           | CoAP
+-------------|----------------|----------------|------------------
+Protocol     | HTTP           | HTTP / SMTP    | UDP
+Data Format  | JSON / XML     | XML only       | Binary (compact)
+Transport    | TCP            | TCP            | UDP
+Overhead     | Low            | High (XML)     | Very Low
+State        | Stateless      | Stateful       | Stateless
+Methods      | GET/POST/PUT   | Custom Ops     | GET/POST/PUT/DEL
+Security     | HTTPS (TLS)    | WS-Security    | DTLS
+Error Handle | HTTP codes     | Fault elements | CoAP codes
+Use Case     | Web APIs       | Enterprise/Bank| IoT Sensors
+Performance  | Moderate       | Slow           | Fast
+
+Request Examples:
+REST: GET /api/temperature HTTP/1.1
+SOAP: &lt;soap:Envelope&gt;&lt;Body&gt;&lt;GetTemp/&gt;&lt;/Body&gt;&lt;/soap:Envelope&gt;
+CoAP: GET coap://device/temp  (binary, 4-byte header)</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define all three protocols (2 marks) → Draw comparison table with 8 parameters (4 marks) → Give one real use case for each (1 mark)</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  UNIT 4                                                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="unit4" class="unit-section">
+    <h2 class="unit-title">Unit 4 — Cloud, Security & Data</h2>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">Cloud for IoT (Storage Models, APIs, Services)</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">Cloud computing for IoT provides scalable on-demand infrastructure for data storage, processing, and analytics. It offers storage models (file, block, object), communication APIs, and service tiers (IaaS, PaaS, SaaS) enabling IoT without managing physical servers.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Storage models: File (hierarchical folders), Block (raw volumes for VMs), Object (key-value with metadata, massively scalable)</li>
+                <li>Communication APIs: REST (HTTP), WebSocket (real-time), MQTT (pub-sub), gRPC (high-performance binary)</li>
+                <li>Service models: IaaS (virtual servers/storage), PaaS (dev platform), SaaS (ready applications)</li>
+                <li>Major platforms: AWS IoT Core, Azure IoT Hub, Google Cloud IoT, IBM Watson IoT</li>
+                <li>Benefits: Elastic scalability, pay-per-use, global access, managed security, disaster recovery</li>
+                <li>Cloud features for IoT: device registry, message routing, stream analytics, ML inference, dashboards</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">Cloud IoT Architecture:
+
+[IoT Devices] → [Gateway] → [Cloud Platform]
+                              ┌──────┼──────┐
+                              ↓      ↓      ↓
+                          [Storage][Proc] [Analytics]
+                          File/Blk  ML    Dashboard
+                          Object   Func   Reports
+                              └──────┼──────┘
+                                     ↓
+                              [Applications / Users]
+
+Service Models:
+SaaS ── Ready IoT apps (no coding needed)
+PaaS ── Dev platform (build your IoT app)
+IaaS ── Virtual machines + storage (full control)
+
+Storage Models:
+FILE  : /folder/file.dat  (hierarchical, like a hard drive)
+BLOCK : Raw volume attached to VM  (like a disk partition)
+OBJECT: bucket/key + metadata  (S3, Azure Blob — most scalable)</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define cloud for IoT (1 mark) → Explain 3 storage models with examples (2 marks) → Describe IaaS/PaaS/SaaS (2 marks) → List 4 benefits and 2 platform names (2 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">IoT Security Challenges, Attacks and Vulnerability Analysis</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">IoT security protects connected devices, networks, and data from unauthorized access and malicious attacks. The massive scale, resource constraints, and heterogeneity of IoT create unique security challenges requiring layered defense strategies.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Challenges: Limited compute/memory for encryption, no standardization, weak default authentication, no update mechanisms, physical exposure</li>
+                <li>Physical attacks: device tampering, hardware cloning, side-channel analysis, theft</li>
+                <li>Network attacks: eavesdropping, Man-in-the-Middle (MITM), DDoS, replay attacks, jamming</li>
+                <li>Software attacks: malware injection, firmware exploits, backdoors, command injection</li>
+                <li>Famous attack — Mirai Botnet (2016): infected 600,000 IoT cameras/routers → largest DDoS in history</li>
+                <li>Mitigation: TLS/DTLS encryption, certificate auth, secure boot, OTA updates, network segmentation, zero-trust</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">IoT Attack Surface (3 layers):
+
+PHYSICAL LAYER:
+  [Device] ←── Tampering, Cloning, Side-channel
+
+NETWORK LAYER:
+  [Channel] ←── Eavesdrop, MITM, DDoS, Replay, Jamming
+
+APPLICATION LAYER:
+  [Software] ←── Malware, Injection, Backdoor, Exploit
+
+Layered Security Mitigation:
+─────────────────────────────────────────
+Application : Secure coding, Input validation
+Data        : Encryption at rest and in transit
+Network     : Firewall, IDS/IPS, VPN, Segmentation
+Device      : Auth, Secure boot, TPM, OTA updates
+Physical    : Tamper detection, Access control
+─────────────────────────────────────────
+
+Real Attacks:
+Mirai Botnet  → DDoS via 600K infected IoT devices
+MITM Attack   → Intercept and alter device commands
+Replay Attack → Re-send captured valid packets
+Firmware Hack → Flash malicious firmware over OTA</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">List 5 challenges (2 marks) → Explain 3 attack categories with named examples (3 marks) → Describe layered mitigation strategy (2 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">Data Analytics and Data Store in IoT</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">IoT data analytics extracts actionable insights from continuous sensor streams using statistical, machine learning, and AI techniques. Data stores manage high-volume, high-velocity IoT data using specialized databases optimized for time-series, scale, and query patterns.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Analytics types: Descriptive (what happened), Diagnostic (why it happened), Predictive (what will happen), Prescriptive (what action to take)</li>
+                <li>Analytics tools: Apache Kafka (ingestion), Apache Spark (batch), Apache Flink (streaming), TensorFlow (ML)</li>
+                <li>Storage models: Relational/SQL (structured, ACID), NoSQL (flexible, scalable), Time-series InfluxDB (timestamped), Data Lake (raw, all formats)</li>
+                <li>Processing modes: Batch (scheduled, historical), Stream (continuous, real-time), Edge (local, low latency)</li>
+                <li>Data pipeline: Ingestion → Storage → Processing → Analytics → Visualization</li>
+                <li>Use cases: Predictive maintenance (factory), anomaly detection (security), pattern recognition (retail)</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">IoT Data Pipeline:
+
+[Sensors] → [Kafka] → [Storage DB] → [Spark/Flink] → [ML Model] → [Dashboard]
+ (Collect)   (Ingest)  (Persist)     (Process)       (Analyse)    (Visualise)
+
+Analytics Types:
+DESCRIPTIVE : "Temperature was 45°C at 3pm"     (reports)
+DIAGNOSTIC  : "Overheating caused by fan failure"(root cause)
+PREDICTIVE  : "Fan will fail in 3 days"          (forecast)
+PRESCRIPTIVE: "Replace fan now, schedule at 2am" (action)
+
+Storage Selection Guide:
+Structured + ACID needed   → RELATIONAL (PostgreSQL, MySQL)
+Flexible schema, high scale → NoSQL (MongoDB, Cassandra)
+Sensor time-stamps, IoT data→ TIME-SERIES (InfluxDB, TimescaleDB)
+Raw data, multiple formats  → DATA LAKE (AWS S3, HDFS)
+
+Processing Modes:
+BATCH  : run nightly on 1M records (Spark)
+STREAM : process each reading in &lt;100ms (Flink)
+EDGE   : run on gateway before sending to cloud</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define analytics (1 mark) → Explain 4 analytics types with IoT examples (2 marks) → Describe 4 storage models with use cases (2 marks) → Draw data pipeline (2 marks)</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  UNIT 5                                                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="unit5" class="unit-section">
+    <h2 class="unit-title">Unit 5 — Design, Models & Case Studies</h2>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">IoT Design Methodology and ITU-IoT Reference Model</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">IoT Design Methodology is a structured 6-step process from requirements to deployment. The ITU-T Y.2060 IoT Reference Model standardizes a 4-layer architecture (Application, Service Support, Network, Device) used globally for IoT system design.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Design steps: (1) Purpose and Requirements, (2) Process Specification, (3) Domain Model, (4) Information Model, (5) Service Specifications, (6) IoT Level Specification</li>
+                <li>ITU-T layers: Application (user interfaces/apps), Service Support and Application Support (middleware/APIs), Network (connectivity), Device (sensors/actuators/gateways)</li>
+                <li>Cross-cutting capabilities: Security, Management, QoS (span all 4 layers)</li>
+                <li>IoT levels 1-6 define complexity: L1=single node, L2=local, L3=cloud, L4=multi-cloud, L5=collaborative, L6=central control</li>
+                <li>Domain model defines entities, relationships, and attributes of the IoT system</li>
+                <li>Design considerations: scalability, interoperability, security, power, cost, reliability</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">IoT Design Methodology:
+Step 1: Purpose & Requirements → goals, constraints, users
+Step 2: Process Specification   → workflows, data flows
+Step 3: Domain Model            → entities and relationships
+Step 4: Information Model       → data structures, formats
+Step 5: Service Specifications  → APIs, protocols, interfaces
+Step 6: IoT Level Specification → architecture complexity level
+
+ITU-T Y.2060 Reference Model:
+┌──────────────────────────────────────────────┐
+│         APPLICATION LAYER                    │
+│   Smart Home, Healthcare, Smart City apps    │
+├──────────────────────────────────────────────┤
+│    SERVICE SUPPORT & APPLICATION SUPPORT     │
+│   Middleware, Device Mgmt, Data Processing   │
+├──────────────────────────────────────────────┤
+│           NETWORK LAYER                      │
+│   WiFi, Zigbee, Cellular, Internet, Gateway  │
+├──────────────────────────────────────────────┤
+│           DEVICE LAYER                       │
+│   Sensors, Actuators, Gateways, Controllers  │
+└──────────────────────────────────────────────┘
+   ←── Security ──── Management ──── QoS ──→
+            (cross-cutting capabilities)</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">List 6 design methodology steps (2 marks) → Draw ITU model with 4 layers + cross-cutting capabilities (4 marks) → List design considerations (1 mark)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">NFV, SDN and NFC</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">NFV (Network Function Virtualization) runs network functions as software on standard servers. SDN (Software Defined Networking) separates control and data planes for programmable networks. NFC (Near Field Communication) enables contactless data exchange within 4 cm range.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>NFV: replaces dedicated hardware (routers, firewalls, load balancers) with VMs on standard x86 servers — reduces cost and increases flexibility</li>
+                <li>SDN: centralized controller manages network via OpenFlow protocol; separates control plane (decisions) from data plane (forwarding)</li>
+                <li>SDN layers: Application Layer (business logic), Control Layer (SDN Controller = brain), Infrastructure Layer (dumb switches/routers)</li>
+                <li>NFC: 13.56 MHz, 4 cm range, 106-424 kbps; modes: Reader/Writer, Peer-to-Peer, Card Emulation</li>
+                <li>NFC applications: contactless payments, access cards, device pairing, smart posters, ticketing</li>
+                <li>IoT use: NFV/SDN provide flexible network slicing; NFC used for device provisioning and secure pairing</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">NFV Architecture:
+[Virtual FW] [Virtual Router] [Virtual Load Balancer]
+          ↓         ↓               ↓
+  [Hypervisor / Virtual Machine Manager (VMM)]
+          ↓         ↓               ↓
+      [Standard x86 Commodity Server Hardware]
+
+SDN Architecture:
+┌──────────────────────────────────────┐
+│ APPLICATION LAYER                    │
+│ (Network apps, IoT management logic) │
+├──────────────────────────────────────┤
+│ CONTROL LAYER                        │
+│ (SDN Controller — the "brain")       │
+│ OpenFlow protocol ↕                  │
+├──────────────────────────────────────┤
+│ INFRASTRUCTURE LAYER                 │
+│ (Switches / Routers — just forward)  │
+└──────────────────────────────────────┘
+
+NFC Communication:
+[Active Device] ←──── max 4cm ────→ [Passive Tag/Device]
+   13.56 MHz carrier frequency
+   Modes: Reader/Writer | P2P | Card Emulation</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define NFV, SDN, NFC (2 marks) → Draw SDN 3-layer architecture (2 marks) → Explain NFV benefits, NFC 3 modes, and IoT roles (3 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">Smart Home and Smart Farming Case Studies</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">Smart Home uses IoT devices for home automation, security, and energy management via smartphone control. Smart Farming applies IoT sensors, drones, and analytics for precision agriculture to optimize crop yield and resource usage.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>Smart Home devices: smart lights, thermostats, locks, cameras, voice assistants, central hub/gateway</li>
+                <li>Smart Home sensors: motion (PIR), temperature, humidity, door/window reed switch, smoke, CO, water leak</li>
+                <li>Smart Home benefits: 30-40% energy savings, enhanced security, remote monitoring, automation routines</li>
+                <li>Smart Farming sensors: soil moisture, soil pH, temperature, humidity, light intensity, NPK nutrient levels, weather stations</li>
+                <li>Smart Farming applications: automated drip irrigation, fertilizer dosing, pest/disease detection, livestock health monitoring, drone surveillance</li>
+                <li>Smart Farming benefits: 20-50% water savings, higher yield, reduced labour cost, data-driven decisions, sustainability</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">Smart Home Architecture:
+
+[Sensors]──→[Hub/Gateway]──→[Cloud]──→[Mobile App]
+ Motion PIR     ↓              ↓          ↓
+ Temperature [Local        [Analytics] [Remote
+ Door/Smoke   Control]     Dashboard]   Control]
+                ↓
+           [Actuators] ←─[Automation Rules]
+           Smart Lights
+           Door Lock, AC, Blinds
+
+Smart Farming Architecture:
+
+[Field Sensors]──→[Gateway]──→[Cloud/AI Platform]
+ Soil Moisture        ↓              ↓
+ pH, Temperature  [Edge Node]  [ML Analytics]
+ NPK, Humidity        ↓              ↓
+ Weather Station  [Local Ctrl]  [Farmer App]
+                      ↓
+                 [Actuators] ←─[Prescriptive AI]
+                 Drip Irrigation
+                 Fertilizer Pump, Drone</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define both (1 mark) → Draw Smart Home architecture with 4 layers and sensors (2 marks) → Draw Smart Farming with sensors and actuators (2 marks) → List 3 benefits each (2 marks)</div>
+        </div>
+    </div>
+
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">Industrial IoT and Automotive IoT Applications</div>
+            <div class="toggle-icon">+</div>
+        </div>
+        <div class="topic-content">
+            <div class="section-heading">Definition</div>
+            <div class="definition">Industrial IoT (IIoT) connects factory machines, robots, and systems for automation, monitoring, and predictive maintenance. Automotive IoT integrates sensors, connectivity, and AI in vehicles for safety systems, navigation, diagnostics, and autonomous driving.</div>
+            <div class="section-heading">Key Points</div>
+            <ul class="key-points">
+                <li>IIoT applications: predictive maintenance, asset tracking, quality control, supply chain optimization, energy management, worker safety monitoring</li>
+                <li>IIoT components: vibration/temperature/pressure sensors, PLCs, SCADA systems, OPC UA protocol, edge gateways, cloud analytics</li>
+                <li>IIoT protocols: OPC UA (standard), Modbus (legacy), MQTT (cloud), DDS (real-time)</li>
+                <li>Automotive IoT: connected cars, telematics, V2V (vehicle-to-vehicle), V2I (vehicle-to-infrastructure), ADAS, Level 2-5 autonomy</li>
+                <li>Automotive sensors: GPS, cameras (360°), LiDAR (3D mapping), RADAR, ultrasonic, OBD-II (diagnostics), IMU</li>
+                <li>Key difference: IIoT — factory, reliability-critical, wired + wireless; Automotive — mobile, safety-critical, real-time, wireless</li>
+            </ul>
+            <div class="section-heading">Diagram</div>
+            <div class="diagram">Industrial IoT:
+[Factory Floor: Machines, Robots, Sensors]
+  Vibration, Temperature, Pressure, Flow
+         ↓
+[Edge Gateway] → protocol conversion, local analytics
+         ↓
+[Cloud Platform] → ML, Dashboards, Alerts
+         ↓
+[Applications] → Predictive Maintenance, Optimization
+
+Automotive IoT:
+[Vehicle Sensor Suite]
+  GPS, 360° Camera, LiDAR, RADAR, Ultrasonic, OBD-II
+         ↓
+[In-Vehicle ECU / Gateway]
+         ↓
+[Connectivity] → 4G/5G Cellular, V2X, WiFi
+         ↓
+[Cloud Services] → Navigation, OTA Updates, Fleet Mgmt
+         ↓
+[Driver / Fleet Manager App]
+
+Comparison:
+IIoT        : Fixed location, heavy duty, latency tolerant
+Automotive  : Mobile, safety-critical, real-time required</div>
+            <div class="section-heading">7-Mark Answer Trick</div>
+            <div class="trick">Define IIoT and Automotive IoT (2 marks) → List 3 IIoT use cases and components (2 marks) → List 3 Automotive features and sensors (2 marks) → Compare key differences (1 mark)</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  QUICK REFERENCE — LESS IMPORTANT TOPICS               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="quick-ref" class="unit-section">
+    <h2 class="unit-title">Quick Reference — Other Topics</h2>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">ICT Trends and Megatrends in IoT</div>
+        <div class="quick-ref-def">ICT trends (cloud, big data, AI/ML, 5G) provide the technological backbone enabling IoT at scale. Megatrends (urbanization, aging population, climate change) create the societal demand driving IoT adoption worldwide.</div>
+        <div class="quick-ref-analogy">Like how roads and electricity had to exist before cars became useful — ICT trends are the infrastructure that make IoT solutions viable.</div>
+        <ul class="key-points">
+            <li>5G enables massive IoT with ultra-low latency (1 ms) and 1 million devices per km²</li>
+            <li>AI/ML converts raw sensor data into intelligent decisions — the brain behind smart IoT systems</li>
+            <li>Urbanization drives smart city demand: 68% of world population in cities by 2050 needs smart infrastructure</li>
+        </ul>
+    </div>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">IoT Applications (Emerging)</div>
+        <div class="quick-ref-def">Emerging IoT applications span smart cities, precision healthcare, autonomous vehicles, connected retail, energy grids, and environmental monitoring — transforming every industry through data-driven automation.</div>
+        <div class="quick-ref-analogy">Just as electricity moved from powering factories to every device in your home, IoT is expanding from industrial monitoring into every aspect of daily life.</div>
+        <ul class="key-points">
+            <li>Smart Cities: intelligent traffic, waste bin sensors, smart parking, air quality monitoring</li>
+            <li>Connected Healthcare: wearable monitors, remote patient care, smart pill dispensers, asset tracking in hospitals</li>
+            <li>Precision Agriculture: drone-based crop analysis, automated irrigation, livestock health wearables</li>
+        </ul>
+    </div>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">Participatory Sensing</div>
+        <div class="quick-ref-def">Participatory sensing leverages smartphones and wearables carried by ordinary citizens to collectively gather large-scale environmental and social data. Citizens act as mobile sensing nodes contributing to distributed monitoring networks.</div>
+        <div class="quick-ref-analogy">Like traffic apps that use your phone's GPS to calculate congestion for everyone — participatory sensing uses millions of citizen phones to map environmental conditions no single sensor grid could cover.</div>
+        <ul class="key-points">
+            <li>Uses built-in smartphone sensors: GPS, microphone, camera, accelerometer, barometer</li>
+            <li>Applications: urban noise mapping, air quality crowdsourcing, pothole detection, disease outbreak tracking</li>
+            <li>Challenge: privacy concerns, data quality variation, battery consumption, participation incentives</li>
+        </ul>
+    </div>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">IP Addressing in IoT</div>
+        <div class="quick-ref-def">IoT requires unique IP addresses for every device. IPv4 (32-bit, 4.3 billion addresses) is exhausted. IPv6 (128-bit) provides 340 undecillion addresses — enough for every IoT device conceivable.</div>
+        <div class="quick-ref-analogy">IPv4 is like a city running out of phone numbers — IPv6 gives every grain of sand on Earth its own unique address, solving the IoT scale problem permanently.</div>
+        <ul class="key-points">
+            <li>IPv6 = 128-bit addresses → 3.4 × 10³⁸ unique addresses — every sensor can have a globally routable address</li>
+            <li>IPv6 supports auto-configuration (SLAAC) — IoT devices configure their own addresses without DHCP</li>
+            <li>6LoWPAN compresses IPv6 headers from 40 bytes to as few as 2 bytes for constrained IoT devices</li>
+        </ul>
+    </div>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">Web Sockets</div>
+        <div class="quick-ref-def">WebSocket is an application layer protocol providing persistent, full-duplex bidirectional communication over a single TCP connection. It upgrades from HTTP and maintains an open channel eliminating repeated polling for live IoT dashboards.</div>
+        <div class="quick-ref-analogy">HTTP is like exchanging letters — you send one, wait for a reply. WebSocket is like a phone call that stays open so both sides can speak the moment something happens.</div>
+        <ul class="key-points">
+            <li>Starts with HTTP Upgrade handshake, then switches to persistent WebSocket frame protocol</li>
+            <li>Reduces overhead dramatically vs HTTP polling — ideal for real-time sensor dashboards and live alerts</li>
+            <li>Supports both text (JSON) and binary frames; used in IoT monitoring UIs, chat, gaming, live tracking</li>
+        </ul>
+    </div>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">Information Exchange Patterns in IoT</div>
+        <div class="quick-ref-def">Information exchange patterns define the structural models for how IoT components communicate data: request-response, publish-subscribe, push-pull, and exclusive pair — each suited to different latency, reliability, and scalability needs.</div>
+        <div class="quick-ref-analogy">Like different postal services: registered mail (request-response), newsletter subscription (pub-sub), PO box pickup (push-pull), and a direct phone call (exclusive pair).</div>
+        <ul class="key-points">
+            <li>Request-Response: synchronous, client-initiated — used in HTTP and CoAP for on-demand sensor reads</li>
+            <li>Publish-Subscribe: asynchronous, decoupled through broker — used in MQTT for continuous sensor streams</li>
+            <li>Push-Pull: queue-buffered, load-balanced — used in AMQP; producer and consumer operate at different speeds</li>
+        </ul>
+    </div>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">IoT Functional View</div>
+        <div class="quick-ref-def">The IoT Functional View organizes system capabilities into logical functional groups — device, communication, service, data management, security, and management — independent of physical implementation or deployment topology.</div>
+        <div class="quick-ref-analogy">Like a restaurant's departments (kitchen, service, billing, security) that all work together regardless of the building's floor plan — functional groups define what the system does, not how it is physically wired.</div>
+        <ul class="key-points">
+            <li>Device Functional Group: sensor/actuator lifecycle, firmware updates, device registry</li>
+            <li>Communication Functional Group: protocol management, message routing, QoS, data encoding</li>
+            <li>Service Functional Group: middleware APIs, application enablement, data processing, event management</li>
+        </ul>
+    </div>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">OGC Functional Architecture</div>
+        <div class="quick-ref-def">The Open Geospatial Consortium (OGC) Sensor Web Enablement (SWE) framework defines open standards so any geospatial IoT sensor can interoperate with any application. Core services: SOS, SPS, and SAS.</div>
+        <div class="quick-ref-analogy">Like GPS standards that allow any map app on any phone from any brand to give you accurate navigation — OGC standards ensure any sensor feeds any geospatial platform without custom integration.</div>
+        <ul class="key-points">
+            <li>SOS (Sensor Observation Service): query and retrieve observations from sensors in standard format</li>
+            <li>SPS (Sensor Planning Service): remotely task and configure sensors to collect specific data</li>
+            <li>SAS (Sensor Alert Service): subscribe to notifications when sensor readings cross defined thresholds</li>
+        </ul>
+    </div>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">IETF Working Groups</div>
+        <div class="quick-ref-def">The Internet Engineering Task Force (IETF) develops IoT networking standards through specialized working groups. Key groups: 6LoWPAN (IPv6 on low-power networks), CoRE (constrained RESTful environments), and ROLL (routing in lossy networks).</div>
+        <div class="quick-ref-analogy">Like the Bureau of Standards that writes universal rules so plugs from any manufacturer fit any socket — IETF writes the internet rules so any IoT device interoperates with any network worldwide.</div>
+        <ul class="key-points">
+            <li>6LoWPAN WG: IPv6 header compression and adaptation for IEEE 802.15.4 (foundation of modern IoT networking)</li>
+            <li>CoRE WG: CoAP protocol, resource discovery (/.well-known/core), and RESTful IoT API design</li>
+            <li>ROLL WG: RPL (Routing Protocol for LLNs) — IPv6 routing optimized for low-power lossy sensor networks</li>
+        </ul>
+    </div>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">Service Choreography in IoT</div>
+        <div class="quick-ref-def">Service choreography is decentralized coordination where multiple IoT services collaborate autonomously based on shared events and messages. No central orchestrator — each service independently knows when and how to respond.</div>
+        <div class="quick-ref-analogy">Like a jazz band with no conductor — each musician listens to the others and responds instinctively, creating coordinated music without anyone directing. Each IoT service responds to events without a central controller.</div>
+        <ul class="key-points">
+            <li>Decentralized: services are self-coordinating; failure of one service does not stop others</li>
+            <li>Event-driven: services trigger on messages, sensor readings, or state changes — not on explicit commands</li>
+            <li>Contrasts with orchestration (central engine directs all): choreography is more resilient but harder to debug</li>
+        </ul>
+    </div>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">IoT Deployment and Operational View</div>
+        <div class="quick-ref-def">Deployment view maps the physical distribution of IoT system components across edge, fog, and cloud tiers. Operational view covers the ongoing lifecycle: device provisioning, monitoring, software updates, fault management, and decommissioning.</div>
+        <div class="quick-ref-analogy">Like a city's water supply — deployment view is the map of pipes, pumps, and reservoirs; operational view is the daily monitoring schedule, maintenance crew, and emergency response plan.</div>
+        <ul class="key-points">
+            <li>Edge tier: sensors/actuators at the data source — lowest latency, limited processing</li>
+            <li>Fog tier: intermediate gateway/local server — pre-processes data to reduce cloud bandwidth</li>
+            <li>Cloud tier: centralized analytics, storage, device management, and application hosting for entire fleet</li>
+        </ul>
+    </div>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">IoT Privacy and Control Solutions</div>
+        <div class="quick-ref-def">IoT privacy protects personal data collected by connected devices through technical and policy measures. Control solutions give users transparency, consent management, and the ability to access, modify, or delete their data.</div>
+        <div class="quick-ref-analogy">Like a lockable diary with a permission slip — privacy is the lock that keeps data secure; control solutions are your power to choose who gets a key and for how long.</div>
+        <ul class="key-points">
+            <li>Data minimization: collect only the minimum data necessary — do not store what you do not need</li>
+            <li>Consent management: explicit user approval before data collection; opt-in preferred over opt-out</li>
+            <li>Privacy-by-design: security and anonymization built into architecture from day one, not bolted on later</li>
+        </ul>
+    </div>
+
+    <div class="quick-ref-card">
+        <div class="quick-ref-title">Smart Street Light System</div>
+        <div class="quick-ref-def">Smart street lighting uses IoT sensors and network connectivity to automatically adjust brightness based on real-time conditions — ambient light levels, pedestrian motion, and time of day — reducing energy consumption by up to 70%.</div>
+        <div class="quick-ref-analogy">Like a well-trained security guard who dims the lights in an empty corridor but brightens them the instant someone approaches — automated, energy-aware, and always on.</div>
+        <ul class="key-points">
+            <li>Sensors used: LDR (ambient light), PIR (motion detection), current/voltage sensors (fault detection), environmental (air quality)</li>
+            <li>Communication: ZigBee or cellular mesh network connecting each pole to a central management system</li>
+            <li>Benefits: 50-70% energy savings, remote fault diagnosis, reduced maintenance visits, integration with emergency services</li>
+        </ul>
+    </div>
+</section>
+
+</main>
+
+<script>
+    function toggleTopic(header) {
+        const content = header.nextElementSibling;
+        const icon = header.querySelector('.toggle-icon');
+        if (content.classList.contains('active')) {
+            content.classList.remove('active');
+            icon.textContent = '+';
+        } else {
+            content.classList.add('active');
+            icon.textContent = '−';
+        }
+    }
+</script>
+</body>
+</html>
